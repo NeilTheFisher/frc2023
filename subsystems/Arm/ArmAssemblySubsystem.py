@@ -14,9 +14,8 @@ class ArmAssemblySubsystem(SubsystemBase):
         self.arm = ArmSubsystem(ArmConstants.Arm)
         self.claw = ArmSubsystem(ArmConstants.Claw)
 
-        
-        self._holdArmPosition = False
-        self._holdClawPosition = False
+        self._holdArmPositionFlag = False
+        self._holdClawPositionFlag = False
 
     def isManuallyControlled(self):
         # instead of imperatively checking if the operator controller is connected, there could be a method/property
@@ -47,11 +46,10 @@ class ArmAssemblySubsystem(SubsystemBase):
         self.lastArmPos = armPos
         self.lastClawPos = clawPos
 
-        if self._holdArmPosition:
+        if self._holdArmPositionFlag:
             self.holdArmPosition()
 
-            
-        if self._holdClawPosition:
+        if self._holdClawPositionFlag:
             self.holdClawPosition()
 
     def getClawAngle(self):
@@ -102,19 +100,19 @@ class ArmAssemblySubsystem(SubsystemBase):
         self.resetClaw()
 
     def stopHoldArmPosition(self):
-        self._holdArmPosition = False
+        self._holdArmPositionFlag = False
 
     def stopHoldClawPosition(self):
-        self._holdArmPosition = False
+        self._holdArmPositionFlag = False
 
     def setHoldArmPosition(self):
-        self._holdClawPosition = True
+        self._holdClawPositionFlag = True
 
     def setHoldClawPosition(self):
-        self._holdClawPosition = True
+        self._holdClawPositionFlag = True
 
     def holdArmPosition(self):
         self.arm.holdPosition()
-    
+
     def holdClawPosition(self):
         self.claw.holdPosition()

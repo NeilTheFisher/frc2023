@@ -153,7 +153,7 @@ class ArmConstants:
 
     class Claw:
         motorType = rev.CANSparkMax.MotorType.kBrushless
-        speedScale = 0.2
+        speedScale = 0.5
         currentLimit = 20  # amps
 
         initialPosition = 180.0  # degrees
