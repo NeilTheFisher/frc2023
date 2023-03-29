@@ -5,7 +5,7 @@ from constants.ArmConstants import ArmConstants
 from photonvision import PhotonCamera
 
 from commands.Auto.PPAutonomousCommand import PPAutonomousCommand
-from commands.Claw.MoveClawCommand import MoveClawCommand
+from commands.Claw.ManualMoveClawCommand import ManualMoveClawCommand
 from commands.Pickup.PickupCommand import PickupCommand
 from commands.SwerveCommand import SwerveCommand
 from constants.GameConstants import GamePieceType
@@ -124,7 +124,7 @@ class RobotContainer:
 
     def setupArm(self):
         self.armAssemblySubsystem.setDefaultCommand(
-            MoveClawCommand(self.armAssemblySubsystem, self.operatorController)
+            ManualMoveClawCommand(self.armAssemblySubsystem, self.operatorController)
         )
 
         self.configureArmButtonBindings()

@@ -22,7 +22,6 @@ def calcAxisSpeedWithCurvatureAndDeadzone(
     c=RobotConstants.rotationCurvature,
     b=RobotConstants.rotationDeadzone,
     dz=RobotConstants.controller_deadzone,
-    scale_speed=RobotConstants.rotationScale,
 ):
     """
     Calculate the speed of the axis with curvature and deadzone
@@ -38,4 +37,4 @@ def calcAxisSpeedWithCurvatureAndDeadzone(
     if abs(x) < dz:
         return 0.0
     sign = sgn(x)
-    return (abs(x**c) * sign * (1 - b) + b * sign) * scale_speed
+    return abs(x**c) * sign * (1 - b) + b * sign

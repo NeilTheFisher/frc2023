@@ -88,15 +88,16 @@ class ArmSubsystem(SubsystemBase):
         self.acceleration = 0.0
 
         self.lastSetAngle = self.initialPosition
+        self.shouldHoldPosition = True
 
     def periodic(self) -> None:
         # calculating acceleration periodically so it's always up to date for the feedforward controller
         # ? maybe this could be moved into setAngle()?
-        velocity = self.armEncoder.getVelocity()
-        now = float(self.timer.get())
-        self.acceleration = (velocity - self.lastVelocity) / (now - self.lastTime)
-        self.lastVelocity = velocity
-        self.lastTime = now
+        # velocity = self.armEncoder.getVelocity()
+        # now = float(self.timer.get())
+        # self.acceleration = (velocity - self.lastVelocity) / (now - self.lastTime)
+        # self.lastVelocity = velocity
+        # self.lastTime = now
 
         # set position to zero when there is speed being applied and the velocity is zero
         # if self.armMotor.get()
@@ -108,6 +109,14 @@ class ArmSubsystem(SubsystemBase):
         #     and abs(self.armEncoder.getVelocity()) < velocityThresholdRad
         # ):
         #     self.armEncoder.setPosition(self.initialPosition)
+
+        # self.lastSetAngle = self.getAngle()
+
+        if self.shouldHoldPosition:
+            self._holdPosition()
+
+    def updateLastSetAngle(self):
+        self.lastSetAngle = self.getAngle()
 
     def setAngle(self, angle: float):
         """
@@ -160,14 +169,20 @@ class ArmSubsystem(SubsystemBase):
         """
         self.armEncoder.setPosition(position)
 
-    def addAngle(self, angle: float):
-        """
-        Adds an angle to the current angle of the arm in degrees.
-        :param angle: The angle to add to the arm in degrees.
-        """
-        self.setAngle(self.getAngle() + angle)
+    # def addAngle(self, angle: float):
+    #     """
+    #     Adds an angle to the current angle of the arm in degrees.
+    #     :param angle: The angle to add to the arm in degrees.
+    #     """
+    #     self.setAngle(self.getAngle() + angle)
 
-    def holdPosition(self):
+    def stopHoldingPosition(self):
+        self.shouldHoldPosition = False
+
+    def startHoldingPosition(self):
+        self.shouldHoldPosition = True
+
+    def _holdPosition(self):
         """
         Holds the current position of the arm.
         """

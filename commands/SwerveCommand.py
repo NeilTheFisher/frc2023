@@ -2,7 +2,6 @@ import math
 from typing import Callable, Set
 
 from commands2 import Command, Subsystem
-from wpimath.controller import PIDController
 from wpimath.filter import SlewRateLimiter
 from wpimath.kinematics import ChassisSpeeds
 
@@ -62,7 +61,7 @@ class SwerveCommand(Command):
         else:
             z = self.controller.getTurn() * speed_scale
             # z = self.zLimiter.calculate(z)
-            z = calcAxisSpeedWithCurvatureAndDeadzone(z)
+            z = calcAxisSpeedWithCurvatureAndDeadzone(z) * RobotConstants.rotationScale
 
         magnitude = abs(x) + abs(y) + abs(z)
         if dz(magnitude) > 0:

@@ -10,21 +10,21 @@ from subsystems.Arm.ArmAssemblySubsystem import ArmAssemblySubsystem
 class ArmCommand(Command):
     def __init__(
         self,
-        arm: ArmAssemblySubsystem,
+        armAssembly: ArmAssemblySubsystem,
         getSelectedGamePiece: typing.Callable[[], GamePieceType],
         angleType: ArmConstants.AngleType,
     ) -> None:
         super().__init__()
-        self.arm = arm
+        self.armAssembly = armAssembly
         self.getSelectedGamePiece = getSelectedGamePiece
         self.angleType = angleType
 
     def getRequirements(self) -> typing.Set[Subsystem]:
-        return {self.arm}
-    
+        return {self.armAssembly}
+
     def initialize(self) -> None:
-        self.arm.stopHoldArmPosition()
-        self.arm.stopHoldClawPosition()
+        self.armAssembly.stopHoldArmPositionFlag()
+        self.armAssembly.stopHoldClawPositionFlag()
 
     def execute(self) -> None:
         armAngle = ArmConstants.angles[self.getSelectedGamePiece()][self.angleType][
@@ -36,11 +36,11 @@ class ArmCommand(Command):
         ]
 
         # TODO might have to add logic to avoid claw collisions using the arm's current angle.
-        self.arm.setArmAndClawAngle(armAngle, clawAngle)
+        self.armAssembly.setArmAndClawAngle(armAngle, clawAngle)
 
     def end(self, interrupted: bool) -> None:
-        self.arm.holdArmPosition()
-        self.arm.holdClawPosition()
+        self.armAssembly.holdArmPosition()
+        self.armAssembly.holdClawPosition()
 
     def isFinished(self) -> bool:
         # return self.arm.atSetpoint()

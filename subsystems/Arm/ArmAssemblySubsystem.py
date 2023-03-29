@@ -17,13 +17,13 @@ class ArmAssemblySubsystem(SubsystemBase):
         self._holdArmPositionFlag = False
         self._holdClawPositionFlag = False
 
-    def isManuallyControlled(self):
-        # instead of imperatively checking if the operator controller is connected, there could be a method/property
-        # on the default command get a callback to check if it is being manually controlled.
-        return self.operatorController.isConnected() and (
-            self.operatorController.getArmRotation() != 0
-            or self.operatorController.getClawRotation() != 0
-        )
+    # def isManuallyControlled(self):
+    #     # instead of imperatively checking if the operator controller is connected, there could be a method/property
+    #     # on the default command get a callback to check if it is being manually controlled.
+    #     return self.operatorController.isConnected() and (
+    #         self.operatorController.getArmRotation() != 0
+    #         or self.operatorController.getClawRotation() != 0
+    #     )
 
     lastArmPos = 0
     lastClawPos = 0
@@ -46,31 +46,25 @@ class ArmAssemblySubsystem(SubsystemBase):
         self.lastArmPos = armPos
         self.lastClawPos = clawPos
 
-        if self._holdArmPositionFlag:
-            self.holdArmPosition()
+    # def getClawAngle(self):
+    #     """Returns the angle of the claw"""
+    #     return self.claw.getAngle()
 
-        if self._holdClawPositionFlag:
-            self.holdClawPosition()
+    # def getWorldClawAngle(self):
+    #     """Returns the angle of the claw added to the angle of the arm to get the total angle of the claw"""
+    #     return (self.getClawAngle() + self.getArmAngle()) % 360
 
-    def getClawAngle(self):
-        """Returns the angle of the claw"""
-        return self.claw.getAngle()
+    # def setClawAngle(self, angle: float):
+    #     """Sets the angle of the claw to the given angle relative to the arm"""
+    #     self.claw.setAngle(angle)
 
-    def getWorldClawAngle(self):
-        """Returns the angle of the claw added to the angle of the arm to get the total angle of the claw"""
-        return (self.getClawAngle() + self.getArmAngle()) % 360
+    # def getArmAngle(self):
+    #     """Returns the angle of the arm"""
+    #     return self.arm.getAngle()
 
-    def setClawAngle(self, angle: float):
-        """Sets the angle of the claw to the given angle relative to the arm"""
-        self.claw.setAngle(angle)
-
-    def getArmAngle(self):
-        """Returns the angle of the arm"""
-        return self.arm.getAngle()
-
-    def setArmAngle(self, angle: float):
-        """Sets the angle of the arm to the given angle"""
-        self.arm.setAngle(angle)
+    # def setArmAngle(self, angle: float):
+    #     """Sets the angle of the arm to the given angle"""
+    #     self.arm.setAngle(angle)
 
     def setArmAndClawAngle(self, armAngle: float, clawAngle: float):
         """
@@ -89,30 +83,6 @@ class ArmAssemblySubsystem(SubsystemBase):
         """Returns true if the arm and claw are at their setpoints"""
         return self.arm.atSetpoint() and self.claw.atSetpoint()
 
-    def resetArm(self):
-        self.arm.setPosition(self.arm.initialPosition)
-
-    def resetClaw(self):
-        self.claw.setPosition(self.claw.initialPosition)
-
     def resetArmAndClaw(self):
-        self.resetArm()
-        self.resetClaw()
-
-    def stopHoldArmPosition(self):
-        self._holdArmPositionFlag = False
-
-    def stopHoldClawPosition(self):
-        self._holdArmPositionFlag = False
-
-    def setHoldArmPosition(self):
-        self._holdClawPositionFlag = True
-
-    def setHoldClawPosition(self):
-        self._holdClawPositionFlag = True
-
-    def holdArmPosition(self):
-        self.arm.holdPosition()
-
-    def holdClawPosition(self):
-        self.claw.holdPosition()
+        self.arm.setPosition(self.arm.initialPosition)
+        self.claw.setPosition(self.claw.initialPosition)
