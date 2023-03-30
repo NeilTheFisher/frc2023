@@ -35,11 +35,17 @@ class PickupCommand(Command):
         intakeSpeed = self.controller.getPickupIntakeSpeed()
         speed = releaseSpeed + intakeSpeed
 
-        if self.stopPickupOnLimitSwitchWhileTriggerHeld:
-            if speed == 0:
-                self.stopPickupOnLimitSwitchWhileTriggerHeld = False
-            self.pickup.set(0)
+        # if the speed is 0, don't let the intake move.
+        # Superior to brake mode, this is to prevent the intake from dropping a cone
+        if speed == 0:
+            self.pickup.holdPosition()
             return
+
+        # if self.stopPickupOnLimitSwitchWhileTriggerHeld:
+        #     if speed == 0:
+        #         self.stopPickupOnLimitSwitchWhileTriggerHeld = False
+        #     self.pickup.set(0)
+        #     return
 
         match self.getGamePieceSelected():
             case GamePieceType.kEmpty:

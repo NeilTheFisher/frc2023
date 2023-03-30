@@ -4,7 +4,6 @@ from commands2 import InstantCommand
 from constants.ArmConstants import ArmConstants
 from photonvision import PhotonCamera
 
-from commands.Auto.PPAutonomousCommand import PPAutonomousCommand
 from commands.Claw.ManualMoveClawCommand import ManualMoveClawCommand
 from commands.Pickup.PickupCommand import PickupCommand
 from commands.SwerveCommand import SwerveCommand
