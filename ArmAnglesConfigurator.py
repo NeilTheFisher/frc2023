@@ -6,6 +6,7 @@ import wpilib
 from constants.ArmConstants import ArmConstants
 
 
+# ! not currently used
 def configureArmAnglePreferences():
     nt = NetworkTableInstance.getDefault()
     listeners = []

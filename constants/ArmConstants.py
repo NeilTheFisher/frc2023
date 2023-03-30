@@ -20,7 +20,6 @@ class ArmConstants:
         kArm = 0
         kClaw = 1
 
-    # ! the values here can be disregarded if they are set by the the RIO's preferences. Toggle below.
     angles: dict[GamePieceType, dict[AngleType, dict[SubsystemType, float]]] = {
         GamePieceType.kCone: {
             AngleType.kStow: {
@@ -54,8 +53,6 @@ class ArmConstants:
                 SubsystemType.kClaw: 180,
             },
             AngleType.kFloor: {
-                # SubsystemType.kArm: 45,
-                # SubsystemType.kClaw: 90,
                 SubsystemType.kArm: 0,
                 SubsystemType.kClaw: 92,
             },
@@ -77,45 +74,22 @@ class ArmConstants:
             },
         },
         # ! this is the same as kCube
-        GamePieceType.kEmpty: {
-            AngleType.kStow: {
-                SubsystemType.kArm: 0,
-                SubsystemType.kClaw: 180,
-            },
-            AngleType.kFloor: {
-                SubsystemType.kArm: 45,
-                SubsystemType.kClaw: 90,
-            },
-            AngleType.kUpperFeedStation: {
-                SubsystemType.kArm: 120,
-                SubsystemType.kClaw: 90,
-            },
-            AngleType.kGridL1: {
-                SubsystemType.kArm: 30,
-                SubsystemType.kClaw: 36,
-            },
-            AngleType.kGridL2: {
-                SubsystemType.kArm: 74,
-                SubsystemType.kClaw: 20,
-            },
-            AngleType.kGridL3: {
-                SubsystemType.kArm: 90,
-                SubsystemType.kClaw: -1,
-            },
-        },
+        GamePieceType.kEmpty: {},
     }
+    angles[GamePieceType.kEmpty] = angles[GamePieceType.kCube]
 
-    usePreferences = False
-    # ! this will override the values in angles
-    if usePreferences:
-        for gamePiece in angles:
-            for angleType in angles[gamePiece]:
-                for subsystemType in angles[gamePiece][angleType]:
-                    preferencesAngle = wpilib.Preferences.getDouble(
-                        f"{gamePiece}/{angleType}/{subsystemType}", -1
-                    )
-                    if preferencesAngle != -1:
-                        angles[gamePiece][angleType][subsystemType] = preferencesAngle
+    # ran out of time to be using this
+    # usePreferences = False
+    # # ! this will override the values in angles
+    # if usePreferences:
+    #     for gamePiece in angles:
+    #         for angleType in angles[gamePiece]:
+    #             for subsystemType in angles[gamePiece][angleType]:
+    #                 preferencesAngle = wpilib.Preferences.getDouble(
+    #                     f"{gamePiece}/{angleType}/{subsystemType}", -1
+    #                 )
+    #                 if preferencesAngle != -1:
+    #                     angles[gamePiece][angleType][subsystemType] = preferencesAngle
 
     class Arm:
         motorType = rev.CANSparkMax.MotorType.kBrushed

@@ -33,11 +33,6 @@ class Robot(wp.TimedRobot):
 
         self.swerveAutoCommand = self.robotContainer.getAutonomousCommand()
 
-        if wp.DriverStation.isFMSAttached():
-            print("FMS is attached")
-        else:
-            closeListeners = configureArmAnglePreferences()
-
     lastArmPos = 0.0
 
     def robotPeriodic(self) -> None:
