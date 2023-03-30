@@ -130,7 +130,7 @@ class RobotContainer:
 
     def configureArmButtonBindings(self) -> None:
         self.operatorController.getResetArmAndClawPosition().onTrue(
-            InstantCommand(self.armAssemblySubsystem.resetArmAndClaw)
+            InstantCommand(self.armAssemblySubsystem.resetArmAndClawPositions)
         )
         self.operatorController.getFloorPickup().whileTrue(
             ArmCommand(

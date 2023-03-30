@@ -66,7 +66,7 @@ class ArmAssemblySubsystem(SubsystemBase):
     #     """Sets the angle of the arm to the given angle"""
     #     self.arm.setAngle(angle)
 
-    def setArmAndClawAngle(self, armAngle: float, clawAngle: float):
+    def moveArmAndClawToAngles(self, armAngle: float, clawAngle: float):
         """
         Sets the angle of the arm and claw to the given angles in space
         Up=180
@@ -74,15 +74,15 @@ class ArmAssemblySubsystem(SubsystemBase):
         Down=0
         Back=270
         """
-        self.arm.setAngle(armAngle)
+        self.arm.moveArmToAngle(armAngle)
         # these are subtracted to get the actual ending angle for the claw to be set to.
         # self.claw.setAngle(worldClawAngle - worldArmAngle)
-        self.claw.setAngle(clawAngle)
+        self.claw.moveArmToAngle(clawAngle)
 
-    def atSetpoint(self):
+    def armAndClawAtSetpoints(self):
         """Returns true if the arm and claw are at their setpoints"""
         return self.arm.atSetpoint() and self.claw.atSetpoint()
 
-    def resetArmAndClaw(self):
+    def resetArmAndClawPositions(self):
         self.arm.setPosition(self.arm.initialPosition)
         self.claw.setPosition(self.claw.initialPosition)

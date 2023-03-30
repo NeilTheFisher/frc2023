@@ -36,7 +36,7 @@ class ArmCommand(Command):
         ]
 
         # TODO might have to add logic to avoid claw collisions using the arm's current angle.
-        self.armAssembly.setArmAndClawAngle(armAngle, clawAngle)
+        self.armAssembly.moveArmAndClawToAngles(armAngle, clawAngle)
 
     def end(self, interrupted: bool) -> None:
         self.armAssembly.holdArmPosition()

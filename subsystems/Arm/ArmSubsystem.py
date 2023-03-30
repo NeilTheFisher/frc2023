@@ -118,7 +118,7 @@ class ArmSubsystem(SubsystemBase):
     def updateLastSetAngle(self):
         self.lastSetAngle = self.getAngle()
 
-    def setAngle(self, angle: float):
+    def moveArmToAngle(self, angle: float):
         """
         Sets the angle of the arm in degrees.
         :param angle: The angle to set the arm to in degrees.
@@ -186,4 +186,4 @@ class ArmSubsystem(SubsystemBase):
         """
         Holds the current position of the arm.
         """
-        self.setAngle(self.lastSetAngle)
+        self.moveArmToAngle(self.lastSetAngle)
